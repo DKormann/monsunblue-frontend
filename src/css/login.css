@@ -1,0 +1,29 @@
+
+.login-form{
+  padding-left:3em;
+
+  text-align: left;
+
+}
+.buffer{
+  height:1em;
+}
+
+
+#username{
+  margin:0;
+  width:80%;
+}
+input{
+  margin:0;
+  width:80%;
+}
+/* #loginbutton{
+  font-size: 2em;
+} */
+
+label{
+  font-size: 2em;
+  font-weight: bold;
+
+}

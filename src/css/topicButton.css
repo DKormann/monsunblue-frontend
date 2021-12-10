@@ -1,0 +1,25 @@
+a{
+  text-decoration: none;
+}
+
+
+
+button{
+  height:100%;
+  width:100%;
+  text-align: left;
+  box-shadow: none;
+  font-size: 1.5vh;
+  margin:0;
+  /* padding: 0.5em 1em 0.5em 1em; */
+  padding: 0;
+}
+.element{
+  /* background: var(--active); */
+  padding:0;
+
+}
+h3{
+  color:var(--gamma);
+  margin:1em;
+}

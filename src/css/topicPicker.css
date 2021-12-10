@@ -1,0 +1,44 @@
+.scrollbox{
+  /* background: white; */
+  margin-left:10vw;
+  margin-right:10vw;
+  margin-top:5vw;
+}
+
+a{
+  text-decoration: none;
+}
+h3{
+  font-size: 3vh;
+  color:var(--gamma);
+  /* margin:1em; */
+  align-self: center;
+}
+
+
+
+
+.boxes{
+
+  /* margin:0; */
+  padding: 1em;
+
+  border:0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  max-height: 70vh;
+  overflow: scroll;
+}
+
+
+.box{
+  margin:1em;
+  width:7em;
+  height:7em;
+  padding: 0;
+  border:0;
+  align-content: center;
+  overflow: hidden;
+}

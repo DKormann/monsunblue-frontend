@@ -1,0 +1,23 @@
+button{
+  font-size: 2em;
+}
+
+span{
+  font-size: 2em;
+}
+
+textarea{
+  border:0;
+  box-shadow: 0px 5px 10px grey;
+  font-size: 2em;
+  max-height: 200px;
+}
+
+select{
+  border:0;
+  font-size: 1em;
+  box-shadow: 0 5px 10px grey;
+}
+option{
+  font-size: 2em;
+}

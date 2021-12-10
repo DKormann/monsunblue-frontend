@@ -1,0 +1,48 @@
+
+label{
+  font-size: 2em;
+  font-weight: bold;
+
+}
+
+input{
+  border-radius: 1em;
+  padding:0.4em;
+  background: #eef;
+}
+
+.developmentCategory{
+  margin:0;
+  font-size: 1em;
+  box-shadow: none;
+  color: black;
+}
+.active {
+  color: var(--active)
+}
+
+.delButton{
+  left: 50vw;
+  color:red;
+  font-size: 1em;
+  margin:0;
+  box-shadow: none;
+  float: right;
+}
+
+.link{
+  box-shadow: none;
+  font-style: italic;
+  background: #0000;
+  color:var(--gamma);
+  font-size: 1.5em;
+}
+
+#deleteAll{
+  color:red;
+  box-shadow: none;
+  background-color: #0000;
+  font-style: italic;
+  font-size: 1.5em;
+
+}

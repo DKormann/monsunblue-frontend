@@ -1,0 +1,124 @@
+:root{
+  --zero: #ecedee;
+  --alpha: #5565ff;
+  --beta: #555555;
+  --gamma: #162470;
+
+  --active: #8af;
+  font-size:2vh;
+}
+
+.nav{
+  background: var(--alpha);
+  background: white;
+  font-size: 2em;
+  padding: 0em;
+  position: sticky;
+  box-shadow: 0px 5px 10px grey;
+}
+
+body{
+  background: var(--zero);
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  padding: 0;
+  border:0;
+
+  margin: 0;
+  margin-bottom:4em;
+}
+
+.spacer{
+  height:1em;
+}
+
+h1{
+  color:var(--alpha);
+  font-size:3em;
+  font-weight: bold;
+}
+
+h2{
+  color: var(--alpha);
+  font-size:2em;
+  font-weight: bold;
+}
+
+h3{
+  color: var(--alpha);
+  font-weight: bold;
+  font-size: 2em;
+  text-decoration: none;
+}
+
+input{
+  font-size: 2em;
+  box-shadow: 0px 5px 10px grey;
+  border:0;
+}
+
+button{
+  background: white;
+  border:0;
+  margin:1em;
+  box-shadow: 0px 5px 10px grey;
+  font-size: 2em;
+}
+
+/* BRÜCHE */
+span.frac {
+	display: inline-block;
+	text-align: center;
+}
+span.frac > sup {
+	display: block;
+	border-bottom: 1px solid;
+	font: inherit;
+}
+span.frac > span {
+	display: none;
+}
+span.frac > sub {
+	display: block;
+	font: inherit;
+}
+
+.element{
+  background: white;
+  margin:2em;
+  padding-left: 2vw;
+  margin-left:8vw;
+  margin-right:8vw;
+  text-align: left;
+  box-shadow: 0px 5px 10px #0007;
+}
+
+.router-link{
+  font-size:1.5em;
+  font-style: italic;
+  color: #000087;
+  color: var(--gamma);
+
+}
+
+.error{
+  color:red;
+  font-size: 2em;
+}
+
+.wave{
+  /* background: red; */
+  height:200px;
+  background-image: url("../assets/A4.svg");
+  animation-name: identifier;
+  animation-duration: 2s;
+}
+.wave2{
+  height:100%;
+  background-image:url("../assets/wav2.svg");
+}
+
+@keyframes identifier {
+  from:{background-color: red}
+  to:{background-color:blue}
+}
