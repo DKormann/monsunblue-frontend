@@ -12,8 +12,6 @@
 <script>
 
 import TopicPicker from '../components/TopicPicker'
-// let auth = require("../database/authentication.js")
-// let utils = require("../utils.js")
 export default {
   name: 'Start',
   components: {

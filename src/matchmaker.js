@@ -1,19 +1,30 @@
+let auth = require("./database/authentication.js")
+let util = require("./utils.js")
 import {supabase} from "./database/backend.js"
 
-
-var session = {userID : localStorage.userID}
-if (!localStorage.userID){
-  if (localStorage.anonymProgress){
-    var anonymProgress = JSON.parse(localStorage.anonymProgress)
-  }else{
-    anonymProgress = {}
-    console.log('new',{anonymProgress});
-  }
-  console.log({anonymProgress});
-}
+var session
 
 async function start(topic){
-  session.topic = topic
+
+  if(!localStorage.userID){
+    // create anonym userprofile
+    let name = util.RandomString()
+    let pwd = util.RandomString()
+    let username = "anon_"+name
+    let mail = username+"@mail"
+    await auth.register(username,mail,pwd)
+    localStorage.anonym = true
+  }
+
+  session = {
+    rating:0,
+    solved:[],
+    failed:[],
+    topic:topic,
+    userID:localStorage.userID,
+
+  }
+
 
   // find out topicID
   let {data,error} = await supabase.from('topics')
@@ -23,10 +34,9 @@ async function start(topic){
   if (error){
     console.log (error)
   }
-
   var res = await supabase.from('progress_table')
   .select('rating,solved,failed')
-  .eq('userID','fd8897d0-82e6-4327-8974-e852147c96e8')
+  .eq('userID',session.userID)
   .eq('topicID',session.topicID)
   .maybeSingle()
   if (res.error){
@@ -49,21 +59,16 @@ async function start(topic){
       }
       session.questionID = -1
     }
-
   }
 
 }
+
 function close(){
   console.log("closing matchmaking on topic:",session.topic);
 }
+
 async function saveNew(){
-  if (!localStorage.userID){
-    anonymProgress[session.topic] = {
-      rating:session.rating,
-      topicID: session.topicID
-    }
-    localStorage.anonymProgress = JSON.stringify(anonymProgress)
-  }else{
+
     let{error} = await supabase.from ('progress_table')
     .insert({
       topicID:session.topicID,
@@ -75,31 +80,24 @@ async function saveNew(){
     if (error){
       throw(error)
     }
-  }
+
 }
 async function save(){
-  if (localStorage.userID == undefined){
-    // anonym user
-    console.log('anonym save');
-    anonymProgress[session.topic]={rating:session.rating,topicID : session.topicID}
-    console.log(JSON.stringify(anonymProgress));
-    localStorage.anonymProgress = JSON.stringify(anonymProgress)
-  }else{
 
-    let {error} = await supabase.from('progress_table')
-    .update({
-      rating: session.rating,
-      solved: session.solved,
-      failed: session.failed,
-    })
-    .match({
-      userID: session.userID,
-      topicID:session.topicID,
-    })
-    if (error){
-      throw(error);
-    }
+  let {error} = await supabase.from('progress_table')
+  .update({
+    rating: session.rating,
+    solved: session.solved,
+    failed: session.failed,
+  })
+  .match({
+    userID: session.userID,
+    topicID:session.topicID,
+  })
+  if (error){
+    throw(error);
   }
+
 }
 
 async function getNewQuestion(){
@@ -111,7 +109,11 @@ async function getNewQuestion(){
   .order('rating',{ascending:true})
   .gte('rating',session.rating)
   .limit(10)
+  if (res.error){
+    console.log(res.error);
+  }
   session.questionCandidates = res.data
+
 
   for (var i = 0; i < session.questionCandidates.length; i++) {
 
@@ -121,6 +123,8 @@ async function getNewQuestion(){
       break
     }
   }
+
+  console.log("getting question on id",session.questionID);
 
 
   let question = (

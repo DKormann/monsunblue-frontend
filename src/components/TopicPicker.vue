@@ -2,7 +2,7 @@
 
   <div class ='scrollbox'>
 
-    <h2 v-if = "this.progress !=null">Deine Themen</h2>
+    <h2 v-if = "this.progress.length != 0">Deine Themen</h2>
     <div v-for= "row  in this.progress" :key = "row">
       <TopicButton v-bind:topic = "[row.topics.title,row.rating]"  />
     </div>
