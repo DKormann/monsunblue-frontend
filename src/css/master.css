@@ -1,11 +1,14 @@
 :root{
   --zero: #ecedee;
-  --alpha: #5565ff;
+  --alpha: #5565ff; /* facebook style */
+  --alpha:#4757ff;
   --beta: #555555;
   --gamma: #162470;
 
   --active: #8af;
-  font-size:2vh;
+  font-size: 2vh ;
+  font-size: 1em;
+
 }
 
 .nav{
@@ -104,18 +107,6 @@ span.frac > sub {
 .error{
   color:red;
   font-size: 2em;
-}
-
-.wave{
-  /* background: red; */
-  height:200px;
-  background-image: url("../assets/A4.svg");
-  animation-name: identifier;
-  animation-duration: 2s;
-}
-.wave2{
-  height:100%;
-  background-image:url("../assets/wav2.svg");
 }
 
 @keyframes identifier {

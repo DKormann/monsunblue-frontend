@@ -58,7 +58,7 @@ export default {
     delAll(){
       if(localStorage.username == undefined){
         alert('Error: Du musst dich Anmelden, um Fragen zu löschen.')
-        return 
+        return
       }
       if(confirm("Willst du wirklich "+this.questions.length+" Fragen löschen?")){
         this.questions.forEach(q=>{
@@ -66,9 +66,7 @@ export default {
         })
       }
     },
-
   },
-
 }
 </script>
 

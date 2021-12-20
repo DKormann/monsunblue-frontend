@@ -1,0 +1,98 @@
+.facetext{
+  text-align: left;
+  float:left;
+  width:40vw;
+  padding-left: 10vw;
+}
+.title{
+  padding-top: 10vw;
+  padding-bottom: 15vw;
+
+}
+.opttext{
+  padding-bottom: 5vw;
+}
+.balancetext{
+  padding-bottom: 10vw;
+}
+.footer{
+  float: left;
+  width:100%;
+  background: white;
+  box-shadow: 0 10px 10px grey;
+}
+.info{
+  padding-left:10vw;
+  padding-top:2vw;
+  padding-bottom:2vw;
+  text-align: left;
+}
+
+.info > *{
+  font-size: 1.5vw;
+  margin: 0;
+}
+
+
+#pagode{
+  pointer-events:none;
+  float:left;
+  padding-top: 7vw;
+  padding-left: 10vw;
+  left:30vw;
+  width:30vw;
+}
+
+*{
+  font-size: 1vw;
+}
+
+h1,h2,h3{
+  padding: 0;
+  margin:0;
+  font-style: normal;
+  font-weight:500;
+  color:var(--alpha);
+}
+
+h1{
+  font-size: 4vw;
+}
+
+h2{
+  font-size: 2vw;
+}
+h3{
+  font-size: 1.5vw;
+}
+
+a{
+  color: black;
+  font-weight: normal
+}
+
+button{
+  color:black;
+  margin:0;
+  background: var(--passive);
+  border-radius: 2em;
+  box-shadow: none;
+  border-width:.3vw;
+  border-style: solid;
+  border-color: var(--alpha);
+  margin-top: .5vw;
+
+}
+
+button:hover{
+  background: var(--alpha);
+  color:white;
+  /* box-shadow: 0px 0px 0px .2vw var(--active); */
+}
+.startbutton:hover{
+  color:white;
+}
+.startbutton{
+  margin:0;
+  color:black;
+}

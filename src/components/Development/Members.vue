@@ -44,10 +44,7 @@ export default {
     search(text){
       console.log('searching',text);
 
-      utils.apiRequest(text,'searchMembers',(response)=>{
-        this.members = JSON.parse(response)
-      })
-
+      
     },
     deleteUser(userName){
       utils.deleteUser(userName)

@@ -22,9 +22,7 @@ async function start(topic){
     failed:[],
     topic:topic,
     userID:localStorage.userID,
-
   }
-
 
   // find out topicID
   let {data,error} = await supabase.from('topics')
@@ -60,7 +58,7 @@ async function start(topic){
       session.questionID = -1
     }
   }
-
+  return session
 }
 
 function close(){
@@ -101,10 +99,11 @@ async function save(){
 }
 
 async function getNewQuestion(){
-
+  console.log({session});
   let res = await supabase.from('question_ratings')
   .select(`
-    questionID`)
+    questionID,
+    rating`)
   .eq('topicID',session.topicID)
   .order('rating',{ascending:true})
   .gte('rating',session.rating)
@@ -113,6 +112,18 @@ async function getNewQuestion(){
     console.log(res.error);
   }
   session.questionCandidates = res.data
+  console.log({candidates: session.questionCandidates});
+  if (session.questionCandidates == null || session.questionCandidates.length == 0){
+    console.error('no questions available');
+
+
+    if (session.failed.length != 0){
+      session.questionID = session.failed.shift()
+    }else{
+
+      return
+    }
+  }
 
 
   for (var i = 0; i < session.questionCandidates.length; i++) {
@@ -120,6 +131,7 @@ async function getNewQuestion(){
     let id = session.questionCandidates[i].questionID
     if (!session.solved.includes(id)){
       session.questionID = id
+      session.questionRating = session.questionCandidates[i].rating
       break
     }
   }
@@ -128,28 +140,54 @@ async function getNewQuestion(){
 
 
   let question = (
-    await supabase.from('questions').select('title,solution').eq('id',session.questionID)
+    await supabase.from('questions')
+    .select('title,solution')
+    .eq('id',session.questionID)
   ).data[0]
 
   return question
 }
+
 function solved() {
 
-  session.rating += 1
+  var change = 1 + (session.questionRating - session.rating) * 0.2
+  change = Math.max(0,change) // cant loose points on solving question
+
+  session.rating += change
   session.solved.push(session.questionID)
 
   if (session.solved.length>10){
     session.solved = session.solved.splice(10)
   }
+  session.failed = session.failed.filter(id => id != session.questionID)
   save()
+  tuneQuestionRating( - change)
+
 }
 function failed() {
-  session.rating -= 3
+  var change = 1 - (session.questionRating - session.rating) * 0.2
+  change = Math.max(0,change)
+
+  session.rating -= 3*change
   session.failed.push(session.questionID)
   if(session.failed.length>10){
     session.failed = session.failed.splice(10)
   }
   save()
+  tuneQuestionRating(change)
+  session.streak = Math.min(session.streak,)
+}
+
+async function tuneQuestionRating(delta){
+  let {error} = await supabase.rpc('tune_question_rating',{
+    topic_id:session.topicID,
+    question_id:session.questionID,
+    delta:delta,
+  })
+  if (error){
+    console.log(error.message);
+  }
+
 }
 
 export{start,close,getNewQuestion, solved, failed}

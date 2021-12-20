@@ -1,5 +1,0 @@
-
-"
-  fill="#080098" stroke-linecap="butt" opacity="1" stroke-linejoin="miter"/>
-</g>
-</svg>

@@ -2,19 +2,19 @@
 
   <h2>Themen</h2>
 
-  <div v-for="key in topicList" :key="key">
+  <div v-for="row in topicList" :key="row">
     <div class="element">
       <h2>
-        {{key}}
+        {{row.title}}
       </h2>
       <button class = 'link' @click = "showquestions('hello')">
-      {{topics[key].length}} Fragen
+      <!-- {{topics[key].length}} Fragen -->
       </button>
     </div>
 
   </div>
 
-  <button class = "link" @click = "createNew = true">neues Thema erstellen</button>
+  <!-- <button class = "link" @click = "createNew = true">neues Thema erstellen</button> -->
 
   <div v-if='createNew'>
     <GetUserInput title="Wie soll das Neue Thema heißen?" :callback  = "createTopic" :exit = "()=>{createNew = false}"/>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-let db = require("../../database/backend.js")
+import {supabase} from "@/database/backend.js"
 import GetUserInput from '../Dialog/GetUserInput.vue'
 export default {
   name : 'Topics',
@@ -45,12 +45,23 @@ export default {
 
   methods:{
     setup(){
-      db.getQuery(`overview/topics`)
-      .then((topics)=>{
-        console.log(topics)
-        this.topics = topics
-        this.topicList = Object.keys(topics)
+      supabase.from('topics')
+      .select('title')
+
+      .then(result =>{
+        let {data} = result
+        console.log(data);
+        this.topicList = data
       })
+      .catch(error=>{
+        console.log(error.message);
+      })
+      // db.getQuery(`overview/topics`)
+      // .then((topics)=>{
+      //   console.log(topics)
+      //   this.topics = topics
+      //   this.topicList = Object.keys(topics)
+      // })
 
     },
     keyup(event){
@@ -58,19 +69,19 @@ export default {
         this.search(this.$refs.search.value)
       }
     },
-    createTopic(name){
-      alert(`creating new topic ${name}`)
-      const id = this.topicList.length +1
-      var topic = {
-        id:id,
-        length:0,
-      }
-      db.setQuery(`overview/topics/${name}/`,topic)
-      db.setQuery(`topics/${id}/`,{
-        creator:localStorage.username,
-        created:Date()
-      })
-      this.setup()
+    createTopic(){
+      throw("not implemented")
+      // const id = this.topicList.length +1
+      // var topic = {
+      //   id:id,
+      //   length:0,
+      // }
+      // db.setQuery(`overview/topics/${name}/`,topic)
+      // db.setQuery(`topics/${id}/`,{
+      //   creator:localStorage.username,
+      //   created:Date()
+      // })
+      // this.setup()
     },
     showquestions(){
 
