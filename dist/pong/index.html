@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Template</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+	      <script>
+          setTimeout(()=>{
+            document.location.href = "http://localhost:8080/#/test/"+localStorage.lastTopic
+          },10000)
+        </script>
+        <script src="index.js"></script>
+        <script>
+            var engine = new Engine({"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":52176,"index.wasm":18140456},"gdnativeLibs":[]});
+            engine.startGame();
+        </script>
+    </body>
+</html>
