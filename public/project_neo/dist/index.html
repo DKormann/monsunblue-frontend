@@ -1,1 +1,113 @@
-<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="./N.png"><title>NEO</title><link href="/js/about.c2c8d3c1.js" rel="prefetch"><link href="/css/app.b344a38d.css" rel="preload" as="style"><link href="/js/app.7fd9b31e.js" rel="preload" as="script"><link href="/js/chunk-vendors.4e5b291a.js" rel="preload" as="script"><link href="/css/app.b344a38d.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script src="/js/chunk-vendors.4e5b291a.js"></script><script src="/js/app.7fd9b31e.js"></script></body></html><style></style>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <div id = 'app'>
+    <div id="nav">
+
+      <a href="./index.html">home</a>
+      <span>| </span>
+      <a href="./about.html">about</a>
+    </div>
+
+    <head>
+      <meta charset="utf-8">
+      <title></title>
+      <!-- <link rel="stylesheet" href="./css/home.css"> -->
+      <!-- <link rel="stylesheet" href="./css/app.css"> -->
+    </head>
+    <body>
+      <div id = 'face'>
+        <h1>NEO</h1>
+        <h2>Nachrichten.</h2>
+      </div>
+
+      <h2 class = "section"> Neueste Beiträge: </h2>
+
+
+      <h3 class = "topic">Britische Regierung soll im Lockdown häufiger Partys gefeiert haben</h3>
+      <h3 class = "topic">Klimaneutralität: Linke will schnellere Klimawende</h3>
+      <h3 class = "topic">Corona-Lage: Drosten und Lauterbach warnen vor zu früher Durchseuchung</h3>
+      <h3 class = "topic">Drosten und Lauterbach warnen vor zu früher Durchseuchung</h3>
+      <h3 class = "topic">Lehrerin während Corona: Ich habe aufgehört, mich zu wundern</h3>
+
+      <h2 class = 'section'> Themen: </h2>
+
+      <h3 class = "topic">Politik</h3>
+      <h3 class = "topic">Gesellschaft</h3>
+      <h3 class = "topic">Wirtschaft</h3>
+      <h3 class = "topic">Kultur</h3>
+      <h3 class = "topic">Wissen</h3>
+
+
+    </body>
+  </div>
+
+</html>
+
+<style scoped>
+  #face{
+    margin-top:2em;
+    margin-bottom:4em;
+  }
+
+  #face h1{
+    font-size: 4em;
+    margin:0;
+  }
+  #face h2{
+    font-size: 1.5em;
+    margin:0;
+  }
+  #face h1:hover{
+    color:var(--active);
+    text-shadow: 0px 0px 10px var(--active);
+  }
+
+  .section{
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+
+  body{
+    background: #222325;
+    text-align:center;
+    --alpha: #88c;
+    --active: #cfcfff;
+
+    /* color:var(--alpha); */
+
+  }
+
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: var(--alpha);
+    /* color:white; */
+  }
+
+  #nav {
+    padding: 30px;
+  }
+
+  #nav a , span {
+    font-weight: bold;
+    font-size:1.5em;
+    color: var(--alpha);
+    text-decoration: none;
+  }
+
+  #nav :hover{
+    text-shadow: 0 0 5px ;
+  }
+
+
+
+  #nav a.router-link-exact-active {
+    color: var(--active)
+  }
+
+
+</style>
