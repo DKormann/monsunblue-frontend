@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser-arcade-physics.min.js"></script>
+</head>
+<style media="screen">
+  body{
+    background:black;
+  }
+  h2{
+    color:white;
+    text-shadow: 4px 2px 6px #44f;
+
+  }
+</style>
+<body>
+  <h2>WASD IJKL</h2>
+
+
+    <script>
+      var config = {
+        type: Phaser.AUTO,
+        width: 1000,
+        height: 800,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update,
+        }
+      };
+      var game = new Phaser.Game(config);
+
+      function preload (){
+          this.load.setBaseURL('https://labs.phaser.io');
+          this.load.image('sky', 'assets/skies/deep-space.jpg');
+          this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+          this.load.image('red', 'assets/particles/red.png');
+          this.load.image('blue','assets/particles/blue.png')
+      }
+
+      function create_player(game){
+        player = game.physics.add.sprite(100,200,'red');
+        player.body.setGravityY(-200);
+        player.body.setSize(50,50)
+        player.setBounce(0.2);
+        player.setCollideWorldBounds(true);
+
+        particles = game.add.particles('red')
+        particles.createEmitter({
+          speed: 0,
+          frequency:10,
+          scale:{start:1,end:0},
+          lifespan:400,
+          blendMode:'ADD'
+        }).startFollow(player)
+        player.tail = particles
+
+        player.star = game.physics.add.sprite(100,200,'blue');
+        player.star.body.setGravityY(-200);
+        player.star.body.setSize(50,50);
+
+        player.star.tail = game.add.particles('blue')
+        player.star.tail.createEmitter({
+          speed:0,
+          frequency:1,
+          scale:{start:.5,end:0},
+          lifespan:300,
+          blendMode:'ADD'
+        }).startFollow(player.star)
+
+
+        return player
+      }
+
+
+      function create (){
+          // this.add.image(400, 300, 'back');
+          img = this.add.image(500,400,'sky')
+          img.scaleX = 2;
+          img.scaleY = 2;
+
+
+          player = create_player(this)
+          // cursors = this.input.keyboard.createCursorKeys();
+          velX = 0
+          velY = 0
+          speed = 400;
+
+          keys = create_keys(this.input.keyboard);
+
+
+
+          starX = 0
+          starY = 0
+          starVelX = 1
+          starVelY = 0
+          starSpeed = 400
+
+
+          // spawn_comet(this)
+
+          comets = this.physics.add.group({
+            key:'red',
+            repeat:10,
+            allowGravity:false,
+            setXY:{x:100,y:10,stepX: 50}
+          });
+
+          comets.children.iterate(function(comet){
+            comet.setCollideWorldBounds(true)
+            comet.setBounce(1)
+            comet.setVelocity(Phaser.Math.FloatBetween(-100,100),Phaser.Math.FloatBetween(-100,100))
+            comet.body.setSize(50,50)
+          })
+          this.physics.add.overlap(player,comets,function(player,comet){
+
+            player.disableBody(true,true)
+            player.destroy()
+            player.active = false;
+            player.tail.destroy()
+            player.star.destroy()
+            player.star.tail.destroy()
+            alert('game over')
+
+          },null,this)
+          this.physics.add.overlap(player.star,comets,function(star,comet){
+            comet.destroy()
+          })
+      }
+      function create_keys(keyboard){
+        return keyboard.addKeys({
+          'W':Phaser.Input.Keyboard.KeyCodes.W,
+          'A':Phaser.Input.Keyboard.KeyCodes.A,
+          'S':Phaser.Input.Keyboard.KeyCodes.S,
+          'D':Phaser.Input.Keyboard.KeyCodes.D,
+          // 'up':Phaser.Input.Keyboard.KeyCodes.UP,
+          // 'down':Phaser.Input.Keyboard.KeyCodes.DOWN,
+          // 'left':Phaser.Input.Keyboard.KeyCodes.LEFT,
+          // 'right':Phaser.Input.Keyboard.KeyCodes.RIGHT,
+          'up':Phaser.Input.Keyboard.KeyCodes.I,
+          'down':Phaser.Input.Keyboard.KeyCodes.K,
+          'left':Phaser.Input.Keyboard.KeyCodes.J,
+          'right':Phaser.Input.Keyboard.KeyCodes.L,
+
+        })
+      }
+
+      function update(){
+        if (player.active){
+          update_player();
+          update_star(player.star);
+
+        }
+
+      }
+
+      function update_player(){
+
+        acc = 0.05
+        slo = 1-acc
+        velX *= slo;
+        velY *= slo;
+
+        if (keys.A.isDown){
+          velX -= acc;
+        }else if (keys.D.isDown){
+          velX += acc;
+        }
+        if(keys.W.isDown){
+          velY -= acc;
+        }else if(keys.S.isDown){
+          velY += acc;
+        }
+        vel = Math.sqrt(velY*velY + velX*velX);
+        if (vel>1){
+          velX /= vel
+          velY /= vel
+        }
+
+        player.setVelocityX(velX * speed)
+        player.setVelocityY(velY * speed)
+      }
+      function update_star(star){
+        maxR = 100
+        acc = 0.1
+        slo = 1-acc
+        starVelX *= slo
+        starVelY *= slo;
+
+        if (keys.up.isDown){
+          starVelY -= acc;
+        }else if (keys.down.isDown){
+          starVelY += acc;
+        }
+        if(keys.right.isDown){
+          starVelX += acc;
+        }else if (keys.left.isDown){
+          starVelX -= acc;
+        }
+        starX = star.x - player.x
+        starY = star.y - player.y
+
+        r = Math.sqrt(starX*starX + starY*starY)
+        vel = Math.sqrt(starVelX*starVelX + starVelY*starVelY)
+
+        if (r > maxR){
+          x = starX/r
+          y = starY/r
+          queer = starVelX*y - starVelY*x
+          starVelX = y*queer;
+          starVelY = -x*queer
+          star.x = player.x+(starX/r*maxR*0.99)
+          star.y = player.y+(starY/r*maxR*0.99)
+          // newVel = Math.sqrt(starVelX*starVelX + starVelY*starVelY)
+          // starVelX /= newVel
+          // starVelY /= newVel
+
+        }
+
+
+        star.setVelocity(starVelX*starSpeed + velX*speed,starVelY*starSpeed+velY*speed)
+      }
+
+
+    </script>
+
+</body>
+</html>
